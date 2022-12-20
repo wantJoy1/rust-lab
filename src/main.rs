@@ -62,6 +62,5 @@ fn get_str() -> String {
     stdin()
         .read_line(&mut guess)
         .expect("Failed to read line");
-    let guess: String = guess;
     guess
 }

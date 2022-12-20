@@ -5,8 +5,18 @@ use rand::Rng;
 
 fn main() {
     println!("Hello, world!");
-    ferris(String::from("Hello fellow Rustaceans!"));
-    guessing();
+
+    println!("Input the function name:");
+    let funcs = ["ferris", "guessing"];
+    for name in &funcs {
+        print!("{}, ", name);
+    }
+
+    match get_str().as_str() {
+        "ferris" => ferris(String::from("Hello fellow Rustaceans!")),
+        "guessing" => guessing(),
+        &_ => println!("invalid name"),
+    }
 }
 
 fn ferris(message: String) {
@@ -24,12 +34,7 @@ fn guessing() {
     loop {
         println!("Please input your guess.");
 
-        let mut guess = String::new();
-        stdin()
-            .read_line(&mut guess)
-            .expect("Failed to read line");
-        
-        let guess: u32 = match guess.trim().parse() {
+        let guess: u32 = match get_str().trim().parse() {
             Ok(num) => num,
             Err(_) => continue,
         };
@@ -44,4 +49,13 @@ fn guessing() {
             },
         }
     }
+}
+
+fn get_str() -> String {
+    let mut guess = String::new();
+    stdin()
+        .read_line(&mut guess)
+        .expect("Failed to read line");
+    let guess: String = guess;
+    return guess;
 }

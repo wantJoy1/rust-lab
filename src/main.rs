@@ -8,14 +8,20 @@ fn main() {
 
     println!("Input the function name:");
     let funcs = ["ferris", "guessing"];
-    for name in &funcs {
-        print!("{}, ", name);
+    for i in 0..funcs.len() {
+        print!("{}:{}, ", i, funcs[i]);
     }
+    println!();
 
-    match get_str().as_str() {
-        "ferris" => ferris(String::from("Hello fellow Rustaceans!")),
-        "guessing" => guessing(),
-        &_ => println!("invalid name"),
+    let func_id: usize = get_str()
+        .trim()
+        .parse()
+        .expect("Input a valid number");
+
+    match func_id {
+        0 => ferris(String::from("Hello fellow Rustaceans!")),
+        1 => guessing(),
+        _ => println!("invalid input"),
     }
 }
 
@@ -57,5 +63,5 @@ fn get_str() -> String {
         .read_line(&mut guess)
         .expect("Failed to read line");
     let guess: String = guess;
-    return guess;
+    guess
 }

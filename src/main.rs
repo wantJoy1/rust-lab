@@ -5,11 +5,11 @@ use rand::Rng;
 
 fn main() {
     println!("Hello, world!");
-    ferris_say(String::from("Hello fellow Rustaceans!"));
+    ferris(String::from("Hello fellow Rustaceans!"));
     guessing();
 }
 
-fn ferris_say(message: String) {
+fn ferris(message: String) {
     let stdout = stdout();
     let width = message.chars().count();
 

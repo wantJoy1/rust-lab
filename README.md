@@ -1,4 +1,4 @@
 # RLab
 Rust Laboratory
-## Referrence
+## Reference
 [official tutorial](https://doc.rust-jp.rs/book-ja/title-page.html)

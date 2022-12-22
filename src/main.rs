@@ -8,20 +8,20 @@ fn main() {
 
     println!("Input the function name:");
     let funcs = ["ferris", "guessing"];
-    for i in 0..funcs.len() {
-        print!("{}:{}, ", i, funcs[i]);
+    for (i, &func_name) in funcs.iter().enumerate() {
+        print!("{}:{}, ", i, func_name);
     }
     println!();
 
     let func_id: usize = get_str()
         .trim()
         .parse()
-        .expect("Input a valid number");
+        .expect("invalid input");
 
     match func_id {
         0 => ferris(String::from("Hello fellow Rustaceans!")),
         1 => guessing(),
-        _ => println!("invalid input"),
+        _ => println!("invalid number"),
     }
 }
 

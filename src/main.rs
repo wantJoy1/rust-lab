@@ -1,5 +1,3 @@
-mod twitter;
-
 use ferris_says::say;
 use std::io::{stdout, BufWriter, stdin};
 use std::cmp::Ordering;

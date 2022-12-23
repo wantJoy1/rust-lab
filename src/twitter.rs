@@ -1,4 +1,4 @@
-mod twitter;
+pub mod twitter;
 
 use std::fs::File;
 use std::collections::HashMap;

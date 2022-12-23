@@ -1,4 +1,4 @@
-mod ferris;
+pub mod ferris;
 
 use ferris_says::say;
 use std::io::{stdout, BufWriter};

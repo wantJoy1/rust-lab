@@ -1,4 +1,4 @@
-mod guess;
+pub mod guess;
 use rand::Rng;
 use std::cmp::Ordering;
 

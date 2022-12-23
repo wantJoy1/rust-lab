@@ -1,7 +1,15 @@
 use ferris_says::say;
+use twitter_v2::TwitterApi;
+use twitter_v2::authorization::{Oauth2Token, BearerToken};
+use twitter_v2::query::{TweetField, UserField};
+use std::fs;
+use std::collections::HashMap;
 use std::io::{stdout, BufWriter, stdin};
 use std::cmp::Ordering;
 use rand::Rng;
+
+#[macro_use]
+extern crate json;
 
 fn main() {
     println!("Hello, world!");
@@ -65,12 +73,15 @@ fn get_str() -> String {
     guess
 }
 
-fn tweets () {
-    use twitter_v2::TwitterApi;
-    use twitter_v2::authorization::{Oauth2Token, BearerToken};
-    use twitter_v2::query::{TweetField, UserField};
+async fn tweets () {
+    let properties: HashMap<String, String> = get_properties();
 
-    let auth = BearerToken::new(std::env::var("APP_BEARER_TOKEN").unwrap());
+    let consumer_key: String = properties.get("TWITTER_CONSUMERKEY").expect("no property");
+    let consumer_key_secret: String = properties.get("TWITTER_CONSUMERSECRET").expect("no property");
+    let access_token: String = properties.get("TWITTER_ACCESSTOKEN").expect("no property");
+    let access_token_secret: String = properties.get("TWITTER_ACCESSTOKENSECRET").expect("no property");
+
+    let auth = BearerToken::new(std::env::var(api_key).unwrap());
     let tweet = TwitterApi::new(auth)
         .get_tweet(1261326399320715264)
         .tweet_fields([TweetField::AuthorId, TweetField::CreatedAt])

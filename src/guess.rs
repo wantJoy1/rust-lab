@@ -1,8 +1,8 @@
-pub mod guess;
+use crate::util::get_str;
 use rand::Rng;
 use std::cmp::Ordering;
 
-fn guessing() {
+pub fn guessing() {
     println!("Guess the number!");
     let secret_number = rand::thread_rng().gen_range(1..101);
 

@@ -1,5 +1,4 @@
-pub mod twitter;
-
+use datetime;
 use std::fs::File;
 use std::collections::HashMap;
 use serde::{Serialize, Deserialize};
@@ -7,8 +6,7 @@ use twitter_v2::TwitterApi;
 use twitter_v2::authorization::{Oauth2Token, BearerToken};
 use twitter_v2::query::{TweetField, UserField};
 
-/*
-async fn tweets () {
+pub async fn tweets() {
     let property: Property = get_property();
 
     let consumer_key: String = property.twitter_consumerkey;
@@ -39,15 +37,14 @@ async fn tweets () {
         .await?
         .into_data();
 }
-*/
 
- #[derive(Serialize, Deserialize)]
- struct Property {
+#[derive(Serialize, Deserialize)]
+struct Property {
     twitter_consumerkey: String, 
     twitter_consumersecret: String, 
     twitter_accesstoken: String, 
     twitter_accesstokensecret: String, 
- }
+}
 
 fn get_property() -> Property {
     let filename = "properties.json";

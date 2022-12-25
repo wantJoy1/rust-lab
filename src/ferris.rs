@@ -1,9 +1,7 @@
-pub mod ferris;
-
 use ferris_says::say;
 use std::io::{stdout, BufWriter};
 
-fn ferris_say(message: String) {
+pub fn ferris_say(message: String) {
     let stdout = stdout();
     let width = message.chars().count();
 

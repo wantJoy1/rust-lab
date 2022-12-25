@@ -1,4 +1,12 @@
-use std::io::stdin;
+mod util;
+mod guess;
+mod ferris;
+mod twitter;
+
+use util::get_str;
+use guess::guessing;
+use ferris::ferris_say;
+use twitter::tweets;
 
 fn main() {
     println!("Hello, world!");
@@ -16,18 +24,9 @@ fn main() {
         .expect("invalid input");
 
     match func_id {
-        0 => ferris(get_str()),
+        0 => ferris_say(get_str()),
         1 => guessing(),
-        2 => tweets(),
+        // 2 => tweets(),
         _ => println!("invalid number"),
     }
-}
-
-fn get_str() -> String {
-    println!("Input value");
-    let mut guess = String::new();
-    stdin()
-        .read_line(&mut guess)
-        .expect("Failed to read line");
-    guess
 }

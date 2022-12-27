@@ -1,20 +1,14 @@
-use datetime;
 use std::fs::File;
-use std::collections::HashMap;
 use serde::{Serialize, Deserialize};
 use twitter_v2::TwitterApi;
-use twitter_v2::authorization::{Oauth2Token, BearerToken};
+use twitter_v2::authorization::BearerToken;
 use twitter_v2::query::{TweetField, UserField};
 
-pub async fn tweets() {
-    let property: Property = get_property();
+pub async fn tweets() -> Result<String, String> {
+    let twitter_property: TwitterProperty = get_twitter_property();
+    let bearer_token: String = twitter_property.bearertoken;
 
-    let consumer_key: String = property.twitter_consumerkey;
-    let consumer_key_secret: String = property.twitter_consumersecret;
-    let access_token: String = property.twitter_accesstoken;
-    let access_token_secret: String = property.twitter_accesstokensecret;
-
-    let auth = BearerToken::new();
+    let auth = BearerToken::new(bearer_token);
     let tweet = TwitterApi::new(auth)
         .get_tweet(1261326399320715264)
         .tweet_fields([TweetField::AuthorId, TweetField::CreatedAt])
@@ -24,9 +18,9 @@ pub async fn tweets() {
         .expect("this tweet should exist");
     assert_eq!(tweet.id, 1261326399320715264);
     assert_eq!(tweet.author_id.unwrap(), 2244994945);
-    assert_eq!(tweet.created_at.unwrap(), datetime!(2020-05-15 16:03:42 UTC));
+    // assert_eq!(tweet.created_at.unwrap(), datetime!(2020-05-15 16:03:42 UTC));
 
-    let auth: Oauth2Token = serde_json::from_str(&stored_oauth2_token)?;
+    /*
     let my_followers = TwitterApi::new(auth)
         .with_user_ctx()
         .await?
@@ -36,19 +30,23 @@ pub async fn tweets() {
         .send()
         .await?
         .into_data();
+        */
+    
+    Ok(tweet.text)
 }
 
 #[derive(Serialize, Deserialize)]
-struct Property {
-    twitter_consumerkey: String, 
-    twitter_consumersecret: String, 
-    twitter_accesstoken: String, 
-    twitter_accesstokensecret: String, 
+struct TwitterProperty {
+    consumerkey: String, 
+    consumersecret: String, 
+    accesstoken: String, 
+    accesstokensecret: String, 
+    bearertoken: String
 }
 
-fn get_property() -> Property {
+fn get_twitter_property() -> TwitterProperty {
     let filename = "properties.json";
-    let file = fs::File::open(filename)
+    let file = File::open(filename)
         .expect("failed to read JSON file");
     serde_json::from_reader(file)
         .expect("failed to deserialize")

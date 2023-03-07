@@ -7,7 +7,7 @@ mod jpbank;
 use util::get_str;
 use guess::guessing;
 use ferris::ferris_say;
-use twitter::tweets;
+// use twitter::tweets;
 use jpbank::parse_csv;
 
 fn main() {
@@ -28,7 +28,7 @@ fn main() {
     match func_id {
         0 => ferris_say(get_str()),
         1 => guessing(),
-        2 => println!("{}", tweets().unwrap()),
+        // 2 => println!("{}", tweets().unwrap()),
         3 => parse_csv(),
         _ => println!("invalid number"),
     }

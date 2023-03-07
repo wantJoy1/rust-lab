@@ -1,15 +1,18 @@
+use twitter_v2::Error;
 use std::fs::File;
 use serde::{Serialize, Deserialize};
 use twitter_v2::TwitterApi;
 use twitter_v2::authorization::BearerToken;
 use twitter_v2::query::{TweetField, UserField};
 
-pub async fn tweets() -> Result<String, String> {
+pub async fn tweets() -> Result<String, Error> {
     let twitter_property: TwitterProperty = get_twitter_property();
     let bearer_token: String = twitter_property.bearertoken;
 
     let auth = BearerToken::new(bearer_token);
-    let tweet = TwitterApi::new(auth)
+    let twitter_api = TwitterApi::new(auth);
+
+    let tweet = twitter_api 
         .get_tweet(1261326399320715264)
         .tweet_fields([TweetField::AuthorId, TweetField::CreatedAt])
         .send()
@@ -20,8 +23,8 @@ pub async fn tweets() -> Result<String, String> {
     assert_eq!(tweet.author_id.unwrap(), 2244994945);
     // assert_eq!(tweet.created_at.unwrap(), datetime!(2020-05-15 16:03:42 UTC));
 
-    /*
-    let my_followers = TwitterApi::new(auth)
+    
+    let my_followers = twitter_api
         .with_user_ctx()
         .await?
         .get_my_followers()
@@ -30,7 +33,6 @@ pub async fn tweets() -> Result<String, String> {
         .send()
         .await?
         .into_data();
-        */
     
     Ok(tweet.text)
 }

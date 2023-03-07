@@ -26,7 +26,7 @@ fn main() {
     match func_id {
         0 => ferris_say(get_str()),
         1 => guessing(),
-        // 2 => tweets(),
+        2 => println!("{}", tweets().unwrap()),
         _ => println!("invalid number"),
     }
 }

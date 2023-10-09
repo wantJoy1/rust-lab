@@ -1,5 +1,5 @@
-# RLab
-Rust Laboratory
+# rust-lab
+Rust laboratory
 
 ## Reference
 - [Official site JP](https://www.rust-lang.org/ja)
